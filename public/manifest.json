@@ -1,0 +1,16 @@
+{
+  "name": "Ayush Vyas - Software Engineer",
+  "short_name": "Ayush Vyas",
+  "description": "Results-driven Software Engineer with 3+ years of experience",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#00d4ff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

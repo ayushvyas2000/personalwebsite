@@ -1,0 +1,91 @@
+---
+import '../styles/global.css';
+import { siteConfig } from '../data/portfolio';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = siteConfig.title, 
+  description = siteConfig.description 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content={siteConfig.author} />
+    <meta name="keywords" content={siteConfig.keywords.join(', ')} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteConfig.siteUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteConfig.siteUrl}${siteConfig.ogImage}`} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={siteConfig.siteUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={`${siteConfig.siteUrl}${siteConfig.ogImage}`} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" 
+      rel="stylesheet" 
+    />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={siteConfig.siteUrl} />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0a0a0f" />
+  </head>
+  <body class="bg-dark min-h-screen antialiased">
+    <slot />
+    
+    <!-- Intersection Observer for scroll animations -->
+    <script>
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
+            entry.target.style.opacity = '1';
+          }
+        });
+      }, observerOptions);
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const animatedElements = document.querySelectorAll('[data-animate]');
+        animatedElements.forEach(el => {
+          (el as HTMLElement).style.opacity = '0';
+          observer.observe(el);
+        });
+      });
+    </script>
+  </body>
+</html>

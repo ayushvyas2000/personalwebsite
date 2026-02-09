@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center';
+  class?: string;
+}
+
+const { 
+  title, 
+  subtitle, 
+  align = 'center',
+  class: className = '' 
+} = Astro.props;
+
+const alignStyles = {
+  left: 'text-left',
+  center: 'text-center'
+};
+---
+
+<div class={`mb-12 md:mb-16 ${alignStyles[align]} ${className}`} data-animate>
+  <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+    <span class="gradient-text">{title}</span>
+  </h2>
+  {subtitle && (
+    <p class="text-text-muted text-lg md:text-xl max-w-2xl mx-auto">
+      {subtitle}
+    </p>
+  )}
+</div>

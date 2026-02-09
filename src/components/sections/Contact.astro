@@ -1,0 +1,82 @@
+---
+import Section from '../ui/Section.astro';
+import SectionTitle from '../ui/SectionTitle.astro';
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { personalInfo, socialLinks } from '../../data/portfolio';
+---
+
+<Section id="contact" background="default">
+  <SectionTitle 
+    title="Get In Touch" 
+    subtitle="Let's work together on your next project"
+  />
+
+  <div class="max-w-3xl mx-auto">
+    <div data-animate>
+      <Card variant="glass" class="text-center">
+        <div class="space-y-8">
+          <!-- Message -->
+          <p class="text-text-muted text-lg leading-relaxed max-w-xl mx-auto">
+            I'm always open to discussing new opportunities, interesting projects, 
+            or just having a conversation about technology. Feel free to reach out!
+          </p>
+
+          <!-- Contact Info -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <a 
+              href={`mailto:${personalInfo.email}`}
+              class="flex items-center gap-3 text-text hover:text-primary transition-colors group"
+            >
+              <div class="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <Icon icon="email" size={20} class="text-primary" />
+              </div>
+              <span class="text-sm md:text-base">{personalInfo.email}</span>
+            </a>
+            
+            <a 
+              href={`tel:${personalInfo.phone.replace(/\s/g, '')}`}
+              class="flex items-center gap-3 text-text hover:text-primary transition-colors group"
+            >
+              <div class="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <Icon icon="phone" size={20} class="text-primary" />
+              </div>
+              <span class="text-sm md:text-base">{personalInfo.phone}</span>
+            </a>
+          </div>
+
+          <!-- CTA Button -->
+          <div class="pt-4">
+            <Button 
+              variant="primary" 
+              size="lg" 
+              href={`mailto:${personalInfo.email}?subject=Hello%20Ayush!`}
+            >
+              <Icon icon="email" size={20} />
+              Send Me a Message
+            </Button>
+          </div>
+
+          <!-- Social Links -->
+          <div class="pt-6 border-t border-border">
+            <p class="text-text-muted text-sm mb-4">Or connect with me on</p>
+            <div class="flex items-center justify-center gap-4">
+              {socialLinks.map((link) => (
+                <a 
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="p-4 rounded-xl bg-dark-card border border-border text-text-muted hover:text-primary hover:border-primary hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1"
+                  aria-label={link.name}
+                >
+                  <Icon icon={link.icon as 'github' | 'linkedin' | 'email'} size={24} />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Card>
+    </div>
+  </div>
+</Section>

@@ -1,0 +1,86 @@
+---
+import Section from '../ui/Section.astro';
+import SectionTitle from '../ui/SectionTitle.astro';
+import Card from '../ui/Card.astro';
+import { skills } from '../../data/portfolio';
+---
+
+<Section id="skills" background="gradient">
+  <SectionTitle 
+    title="Skills & Technologies" 
+    subtitle="Tools and technologies I work with"
+  />
+
+  <!-- Tech Stack Grid -->
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Programming Languages -->
+    <div data-animate>
+      <Card variant="glass">
+        <h3 class="text-lg font-semibold text-amber-400 mb-4">Languages</h3>
+        <div class="flex flex-wrap gap-2">
+          {skills.languages.map((skill) => (
+            <span class="px-3 py-1.5 text-sm bg-amber-400/10 text-text rounded-lg border border-amber-400/20 hover:border-amber-400/50 transition-colors cursor-default">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </Card>
+    </div>
+
+    <!-- Frontend -->
+    <div data-animate>
+      <Card variant="glass">
+        <h3 class="text-lg font-semibold text-primary mb-4">Frontend</h3>
+        <div class="flex flex-wrap gap-2">
+          {skills.frontend.map((skill) => (
+            <span class="px-3 py-1.5 text-sm bg-primary/10 text-text rounded-lg border border-primary/20 hover:border-primary/50 transition-colors cursor-default">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </Card>
+    </div>
+
+    <!-- Backend -->
+    <div data-animate>
+      <Card variant="glass">
+        <h3 class="text-lg font-semibold text-secondary mb-4">Backend</h3>
+        <div class="flex flex-wrap gap-2">
+          {skills.backend.map((skill) => (
+            <span class="px-3 py-1.5 text-sm bg-secondary/10 text-text rounded-lg border border-secondary/20 hover:border-secondary/50 transition-colors cursor-default">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </Card>
+    </div>
+
+    <!-- DevOps -->
+    <div data-animate>
+      <Card variant="glass">
+        <h3 class="text-lg font-semibold text-accent mb-4">DevOps & Tools</h3>
+        <div class="flex flex-wrap gap-2">
+          {skills.devops.map((skill) => (
+            <span class="px-3 py-1.5 text-sm bg-accent/10 text-text rounded-lg border border-accent/20 hover:border-accent/50 transition-colors cursor-default">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </Card>
+    </div>
+
+    <!-- Design -->
+    <div data-animate>
+      <Card variant="glass">
+        <h3 class="text-lg font-semibold text-pink-500 mb-4">Design</h3>
+        <div class="flex flex-wrap gap-2">
+          {skills.design.map((skill) => (
+            <span class="px-3 py-1.5 text-sm bg-pink-500/10 text-text rounded-lg border border-pink-500/20 hover:border-pink-500/50 transition-colors cursor-default">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </Card>
+    </div>
+  </div>
+</Section>

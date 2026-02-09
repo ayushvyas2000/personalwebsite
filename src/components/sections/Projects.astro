@@ -1,0 +1,88 @@
+---
+import Section from '../ui/Section.astro';
+import SectionTitle from '../ui/SectionTitle.astro';
+import Card from '../ui/Card.astro';
+import Icon from '../ui/Icon.astro';
+import Badge from '../ui/Badge.astro';
+import { projects } from '../../data/portfolio';
+
+const featuredProjects = projects.filter(p => p.featured);
+const otherProjects = projects.filter(p => !p.featured);
+---
+
+<Section id="projects" background="gradient">
+  <SectionTitle 
+    title="Featured Projects" 
+    subtitle="Some of my recent work"
+  />
+
+  <!-- Featured Projects Grid -->
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+    {featuredProjects.map((project, index) => (
+      <div data-animate class={`stagger-${index + 1}`}>
+        <Card variant="gradient" class="h-full flex flex-col">
+          <!-- Project Icon/Visual -->
+          <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-4">
+            <Icon icon="code" size={24} class="text-primary" />
+          </div>
+
+          <!-- Content -->
+          <div class="flex-1 space-y-4">
+            <h3 class="text-xl font-bold text-text group-hover:text-primary transition-colors">
+              {project.title}
+            </h3>
+            <p class="text-text-muted text-sm leading-relaxed">
+              {project.description}
+            </p>
+            
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <Badge name={tag} />
+              ))}
+            </div>
+          </div>
+
+          <!-- Link -->
+          <a 
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 mt-6 text-primary hover:text-secondary transition-colors group"
+          >
+            <span class="text-sm font-medium">View Project</span>
+            <Icon icon="external" size={16} class="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          </a>
+        </Card>
+      </div>
+    ))}
+  </div>
+
+  <!-- Other Projects -->
+  {otherProjects.length > 0 && (
+    <div>
+      <h3 class="text-xl font-semibold text-text mb-6 text-center">Other Projects</h3>
+      <div class="grid md:grid-cols-2 gap-4">
+        {otherProjects.map((project) => (
+          <div data-animate>
+            <Card variant="default" class="flex items-center justify-between">
+              <div>
+                <h4 class="font-medium text-text">{project.title}</h4>
+                <p class="text-text-muted text-sm">{project.description}</p>
+              </div>
+              <a 
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="p-2 text-text-muted hover:text-primary transition-colors"
+                aria-label={`View ${project.title}`}
+              >
+                <Icon icon="external" size={20} />
+              </a>
+            </Card>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+</Section>

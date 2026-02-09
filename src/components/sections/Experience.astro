@@ -1,0 +1,67 @@
+---
+import Section from '../ui/Section.astro';
+import SectionTitle from '../ui/SectionTitle.astro';
+import Card from '../ui/Card.astro';
+import Icon from '../ui/Icon.astro';
+import { workExperience } from '../../data/portfolio';
+---
+
+<Section id="experience" background="default">
+  <SectionTitle 
+    title="Work Experience" 
+    subtitle="My professional journey"
+  />
+
+  <div class="relative">
+    <!-- Timeline line -->
+    <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent transform md:-translate-x-1/2"></div>
+
+    <!-- Experience items -->
+    <div class="space-y-12">
+      {workExperience.map((job, index) => (
+        <div 
+          class={`relative flex flex-col md:flex-row gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+          data-animate
+        >
+          <!-- Timeline dot -->
+          <div class="absolute left-0 md:left-1/2 w-4 h-4 bg-primary rounded-full transform -translate-x-1/2 md:-translate-x-1/2 mt-2 glow animate-pulse-glow z-10"></div>
+
+          <!-- Content -->
+          <div class={`ml-8 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}`}>
+            <Card variant="gradient">
+              <div class="space-y-4">
+                <!-- Header -->
+                <div class="flex items-start justify-between flex-wrap gap-2">
+                  <div>
+                    <h3 class="text-xl font-bold text-text">{job.position}</h3>
+                    <p class="text-primary font-medium">{job.company}</p>
+                  </div>
+                  <div class="flex items-center gap-2 text-text-muted text-sm">
+                    <Icon icon="briefcase" size={16} />
+                    <span>{job.duration}</span>
+                  </div>
+                </div>
+
+                <!-- Description -->
+                <p class="text-text-muted">{job.description}</p>
+
+                <!-- Achievements -->
+                <ul class="space-y-2">
+                  {job.achievements.map((achievement) => (
+                    <li class="flex items-start gap-3 text-text-muted text-sm">
+                      <span class="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+                      <span>{achievement}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Card>
+          </div>
+
+          <!-- Spacer for alternating layout -->
+          <div class="hidden md:block md:w-1/2"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Section>

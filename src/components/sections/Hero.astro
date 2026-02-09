@@ -1,0 +1,99 @@
+---
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { personalInfo, summary, socialLinks } from '../../data/portfolio';
+---
+
+<section id="home" class="relative min-h-screen flex items-center overflow-hidden grid-bg pt-24 pb-16">
+  <!-- Animated background elements -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-64 h-64 bg-secondary/10 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
+  </div>
+
+  <div class="container mx-auto px-4 md:px-6 lg:px-8 max-w-6xl relative z-10">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      
+      <!-- Left: Text Content -->
+      <div class="order-2 lg:order-1 text-center lg:text-left">
+        <!-- Greeting -->
+        <p class="text-primary font-mono text-sm md:text-base mb-3 animate-fade-in-up opacity-0">
+          Hello, I'm
+        </p>
+
+        <!-- Name -->
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 animate-fade-in-up opacity-0 stagger-1">
+          <span class="text-text">{personalInfo.name}</span>
+        </h1>
+
+        <!-- Title with gradient -->
+        <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold mb-5 animate-fade-in-up opacity-0 stagger-2">
+          <span class="gradient-text">{personalInfo.title}</span>
+        </h2>
+
+        <!-- Headline -->
+        <p class="text-base md:text-lg text-text-muted mb-8 max-w-lg mx-auto lg:mx-0 animate-fade-in-up opacity-0 stagger-3">
+          {summary.headline}
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4 mb-8 animate-fade-in-up opacity-0 stagger-4">
+          <Button variant="primary" size="md" href="#projects">
+            View My Work
+            <Icon icon="arrow-right" size={18} />
+          </Button>
+          <Button variant="outline" size="md" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+            <Icon icon="download" size={18} />
+            Resume
+          </Button>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex items-center justify-center lg:justify-start gap-3 animate-fade-in-up opacity-0 stagger-5">
+          {socialLinks.map((link) => (
+            <a 
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="p-2.5 rounded-lg border border-border text-text-muted hover:text-primary hover:border-primary hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1"
+              aria-label={link.name}
+            >
+              <Icon icon={link.icon as 'github' | 'linkedin' | 'email'} size={20} />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right: Avatar -->
+      <div class="order-1 lg:order-2 flex justify-center lg:justify-end animate-fade-in-up opacity-0">
+        <div class="relative">
+          <!-- Main avatar -->
+          <div class="w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-2 border-primary/30 shadow-2xl shadow-primary/20">
+            <img 
+              src="/avatar.png" 
+              alt={personalInfo.name}
+              class="w-full h-full object-cover"
+            />
+          </div>
+          
+          <!-- Decorative elements -->
+          <div class="absolute -inset-3 rounded-full border border-primary/20 animate-pulse"></div>
+          <div class="absolute -inset-6 rounded-full border border-secondary/10"></div>
+          
+          <!-- Floating accent dots -->
+          <div class="absolute top-4 -right-2 w-4 h-4 bg-primary rounded-full animate-float shadow-lg shadow-primary/50"></div>
+          <div class="absolute bottom-8 -left-4 w-3 h-3 bg-secondary rounded-full animate-float" style="animation-delay: 0.5s;"></div>
+          <div class="absolute top-1/2 -right-6 w-2 h-2 bg-accent rounded-full animate-float" style="animation-delay: 1s;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce hidden md:block">
+    <div class="w-5 h-8 border-2 border-text-muted/50 rounded-full p-1">
+      <div class="w-1 h-2 bg-primary rounded-full mx-auto animate-pulse"></div>
+    </div>
+  </div>
+</section>

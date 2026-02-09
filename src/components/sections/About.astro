@@ -1,0 +1,55 @@
+---
+import Section from '../ui/Section.astro';
+import SectionTitle from '../ui/SectionTitle.astro';
+import Card from '../ui/Card.astro';
+import Icon from '../ui/Icon.astro';
+import { summary, education } from '../../data/portfolio';
+---
+
+<Section id="about" background="default">
+  <SectionTitle 
+    title="About Me" 
+    subtitle="Get to know me better"
+  />
+
+  <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+    <!-- About Text -->
+    <div data-animate>
+      <Card variant="glass" hover={false}>
+        <div class="space-y-6">
+          <p class="text-text-muted text-lg leading-relaxed">
+            {summary.description}
+          </p>
+          
+          <div class="pt-4 border-t border-border">
+            <div class="flex items-center gap-3 text-text">
+              <Icon icon="graduation" size={24} class="text-primary" />
+              <div>
+                <p class="font-semibold">{education.degree}</p>
+                <p class="text-text-muted text-sm">{education.field}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Card>
+    </div>
+
+    <!-- Highlights -->
+    <div class="grid grid-cols-2 gap-4" data-animate>
+      {summary.highlights.map((highlight, index) => (
+        <Card variant="gradient" class={`text-center stagger-${index + 1}`}>
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-2">
+              <Icon 
+                icon={index === 0 ? 'briefcase' : index === 1 ? 'code' : index === 2 ? 'code' : 'arrow-right'} 
+                size={24} 
+                class="text-primary" 
+              />
+            </div>
+            <p class="text-text font-medium text-sm md:text-base">{highlight}</p>
+          </div>
+        </Card>
+      ))}
+    </div>
+  </div>
+</Section>

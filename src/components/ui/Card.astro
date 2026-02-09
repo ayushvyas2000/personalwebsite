@@ -1,0 +1,39 @@
+---
+interface Props {
+  variant?: 'default' | 'glass' | 'gradient';
+  hover?: boolean;
+  class?: string;
+}
+
+const { 
+  variant = 'default', 
+  hover = true,
+  class: className = '' 
+} = Astro.props;
+
+const baseStyles = `
+  rounded-xl p-6
+  transition-all duration-300 ease-out
+`;
+
+const variants = {
+  default: `
+    bg-dark-card border border-border
+    ${hover ? 'hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1' : ''}
+  `,
+  glass: `
+    glass
+    ${hover ? 'hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1' : ''}
+  `,
+  gradient: `
+    gradient-border
+    ${hover ? 'hover:-translate-y-1' : ''}
+  `
+};
+
+const combinedStyles = `${baseStyles} ${variants[variant]} ${className}`;
+---
+
+<div class={combinedStyles}>
+  <slot />
+</div>
