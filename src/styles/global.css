@@ -19,7 +19,8 @@
 
 /* Base styles */
 html {
-  scroll-behavior: smooth;
+  /* smooth scroll handled by JS for better easing control */
+  scroll-behavior: auto;
 }
 
 body {
@@ -27,6 +28,7 @@ body {
   background-color: var(--color-dark);
   color: var(--color-text);
   overflow-x: hidden;
+  perspective: 1000px;
 }
 
 /* Custom scrollbar */
@@ -47,7 +49,24 @@ body {
   background: var(--color-primary);
 }
 
-/* Glow effects */
+/* ==========================================
+   SCROLL PROGRESS BAR
+   ========================================== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+  z-index: 9999;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.1s linear;
+}
+
+/* ==========================================
+   GLOW & GRADIENT EFFECTS
+   ========================================== */
 .glow {
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
 }
@@ -56,7 +75,6 @@ body {
   text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
 }
 
-/* Gradient text */
 .gradient-text {
   background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   -webkit-background-clip: text;
@@ -106,7 +124,52 @@ body {
   background-size: 50px 50px;
 }
 
-/* Fade in animation */
+/* ==========================================
+   3D CARD TILT EFFECT
+   ========================================== */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+}
+
+.card-3d:hover {
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(0, 212, 255, 0.1);
+}
+
+.card-3d .card-3d-inner {
+  transform: translateZ(20px);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Holographic shine overlay */
+.card-3d::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(0, 212, 255, 0.03) 45%,
+    rgba(124, 58, 237, 0.03) 50%,
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card-3d:hover::after {
+  opacity: 1;
+}
+
+/* ==========================================
+   KEYFRAME ANIMATIONS
+   ========================================== */
+
+/* Fade in up (enhanced) */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -122,12 +185,87 @@ body {
   animation: fadeInUp 0.6s ease-out forwards;
 }
 
-/* Stagger animation delays */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }
+/* 3D Rotate In from Left */
+@keyframes rotateInLeft {
+  from {
+    opacity: 0;
+    transform: perspective(800px) rotateY(25deg) translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateY(0deg) translateX(0);
+  }
+}
+
+.animate-rotate-in-left {
+  animation: rotateInLeft 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* 3D Rotate In from Right */
+@keyframes rotateInRight {
+  from {
+    opacity: 0;
+    transform: perspective(800px) rotateY(-25deg) translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateY(0deg) translateX(0);
+  }
+}
+
+.animate-rotate-in-right {
+  animation: rotateInRight 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* 3D Scale In */
+@keyframes scaleIn3D {
+  from {
+    opacity: 0;
+    transform: perspective(800px) scale(0.8) translateZ(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) scale(1) translateZ(0);
+  }
+}
+
+.animate-scale-in-3d {
+  animation: scaleIn3D 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Flip In from bottom */
+@keyframes flipInX {
+  from {
+    opacity: 0;
+    transform: perspective(800px) rotateX(30deg) translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateX(0deg) translateY(0);
+  }
+}
+
+.animate-flip-in-x {
+  animation: flipInX 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Slide Up with Blur */
+@keyframes slideUpBlur {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.animate-slide-up-blur {
+  animation: slideUpBlur 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
 
 /* Floating animation */
 @keyframes float {
@@ -139,6 +277,18 @@ body {
   animation: float 3s ease-in-out infinite;
 }
 
+/* Enhanced floating with rotation */
+@keyframes floatRotate {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-8px) rotate(2deg); }
+  50% { transform: translateY(-15px) rotate(0deg); }
+  75% { transform: translateY(-8px) rotate(-2deg); }
+}
+
+.animate-float-rotate {
+  animation: floatRotate 4s ease-in-out infinite;
+}
+
 /* Pulse glow animation */
 @keyframes pulseGlow {
   0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
@@ -147,6 +297,266 @@ body {
 
 .animate-pulse-glow {
   animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Morphing gradient background */
+@keyframes morphGradient {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 50% 0%; }
+  50% { background-position: 100% 50%; }
+  75% { background-position: 50% 100%; }
+  100% { background-position: 0% 50%; }
+}
+
+.morph-gradient {
+  background: linear-gradient(
+    -45deg,
+    rgba(0, 212, 255, 0.15),
+    rgba(124, 58, 237, 0.15),
+    rgba(16, 185, 129, 0.1),
+    rgba(0, 212, 255, 0.15)
+  );
+  background-size: 400% 400%;
+  animation: morphGradient 12s ease infinite;
+}
+
+/* Orbit animation for decorative elements */
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+}
+
+.animate-orbit {
+  animation: orbit 15s linear infinite;
+}
+
+/* Scan line effect */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+  z-index: 9998;
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+}
+
+/* Typing cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typing-cursor::after {
+  content: '|';
+  color: var(--color-primary);
+  animation: blink 0.8s step-end infinite;
+  margin-left: 2px;
+  font-weight: 300;
+}
+
+/* Stagger animation delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+.stagger-7 { animation-delay: 0.7s; }
+.stagger-8 { animation-delay: 0.8s; }
+
+/* ==========================================
+   PARALLAX SCROLL SECTIONS
+   ========================================== */
+.parallax-section {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* Scroll-driven reveal states */
+[data-animate] {
+  opacity: 0;
+}
+
+[data-animate="fade-up"] {
+  transform: translateY(40px);
+}
+
+[data-animate="rotate-left"] {
+  transform: perspective(800px) rotateY(25deg) translateX(-60px);
+}
+
+[data-animate="rotate-right"] {
+  transform: perspective(800px) rotateY(-25deg) translateX(60px);
+}
+
+[data-animate="scale-3d"] {
+  transform: perspective(800px) scale(0.8) translateZ(-100px);
+}
+
+[data-animate="flip-x"] {
+  transform: perspective(800px) rotateX(30deg) translateY(40px);
+}
+
+[data-animate="slide-blur"] {
+  transform: translateY(50px);
+  filter: blur(10px);
+}
+
+/* ==========================================
+   DYNAMIC BACKGROUND ORBS
+   ========================================== */
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+  will-change: transform;
+  transition: transform 0.3s ease-out;
+}
+
+.bg-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--color-primary), transparent);
+}
+
+.bg-orb-2 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, var(--color-secondary), transparent);
+}
+
+.bg-orb-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--color-accent), transparent);
+}
+
+/* ==========================================
+   MAGNETIC HOVER EFFECT
+   ========================================== */
+.magnetic {
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+/* ==========================================
+   ANIMATED TIMELINE LINE
+   ========================================== */
+.timeline-line {
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.timeline-line.visible {
+  transform: scaleY(1);
+}
+
+/* ==========================================
+   SKILL CARD 3D FLIP
+   ========================================== */
+.skill-card-wrapper {
+  perspective: 1000px;
+}
+
+.skill-card-inner {
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+}
+
+.skill-card-wrapper:hover .skill-card-inner {
+  transform: rotateY(5deg) rotateX(5deg) translateZ(10px);
+}
+
+/* ==========================================
+   PARTICLES CANVAS
+   ========================================== */
+#particles-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ==========================================
+   NAVBAR SCROLL ENHANCEMENT 
+   ========================================== */
+.navbar-scrolled {
+  background: rgba(10, 10, 15, 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    0 1px 0 0 rgba(0, 212, 255, 0.08),
+    0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.navbar-scrolled #navbar-border {
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.25), rgba(124, 58, 237, 0.2), transparent) !important;
+}
+
+/* ==========================================
+   SECTION REVEAL LINES
+   ========================================== */
+.reveal-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-secondary), transparent);
+  transform: scaleX(0);
+  transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal-line.visible {
+  transform: scaleX(1);
+}
+
+/* ==========================================
+   TEXT GRADIENT SHIFT ON SCROLL
+   ========================================== */
+.gradient-text-shift {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-secondary),
+    var(--color-accent),
+    var(--color-primary)
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 6s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ==========================================
+   NOISE OVERLAY TEXTURE
+   ========================================== */
+.noise-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9997;
 }
 
 /* Selection styling */

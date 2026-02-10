@@ -19,16 +19,16 @@ const otherProjects = projects.filter(p => !p.featured);
   <!-- Featured Projects Grid -->
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
     {featuredProjects.map((project, index) => (
-      <div data-animate class={`stagger-${index + 1}`}>
-        <Card variant="gradient" class="h-full flex flex-col">
+      <div data-animate="scale-3d" class={`stagger-${index + 1}`}>
+        <Card variant="gradient" class="h-full flex flex-col card-3d-hover relative overflow-hidden group">
           <!-- Project Icon/Visual -->
-          <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-4">
+          <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
             <Icon icon="code" size={24} class="text-primary" />
           </div>
 
           <!-- Content -->
           <div class="flex-1 space-y-4">
-            <h3 class="text-xl font-bold text-text group-hover:text-primary transition-colors">
+            <h3 class="text-xl font-bold text-text group-hover:text-primary transition-colors duration-300">
               {project.title}
             </h3>
             <p class="text-text-muted text-sm leading-relaxed">
@@ -48,10 +48,10 @@ const otherProjects = projects.filter(p => !p.featured);
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 mt-6 text-primary hover:text-secondary transition-colors group"
+            class="inline-flex items-center gap-2 mt-6 text-primary hover:text-secondary transition-colors group/link"
           >
             <span class="text-sm font-medium">View Project</span>
-            <Icon icon="external" size={16} class="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            <Icon icon="external" size={16} class="group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
           </a>
         </Card>
       </div>
@@ -60,12 +60,12 @@ const otherProjects = projects.filter(p => !p.featured);
 
   <!-- Other Projects -->
   {otherProjects.length > 0 && (
-    <div>
+    <div data-animate="slide-blur">
       <h3 class="text-xl font-semibold text-text mb-6 text-center">Other Projects</h3>
       <div class="grid md:grid-cols-2 gap-4">
-        {otherProjects.map((project) => (
-          <div data-animate>
-            <Card variant="default" class="flex items-center justify-between">
+        {otherProjects.map((project, index) => (
+          <div data-animate="flip-x" class={`stagger-${index + 1}`}>
+            <Card variant="default" class="flex items-center justify-between card-3d-hover relative overflow-hidden">
               <div>
                 <h4 class="font-medium text-text">{project.title}</h4>
                 <p class="text-text-muted text-sm">{project.description}</p>
@@ -74,7 +74,7 @@ const otherProjects = projects.filter(p => !p.featured);
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="p-2 text-text-muted hover:text-primary transition-colors"
+                class="p-2 text-text-muted hover:text-primary transition-colors magnetic"
                 aria-label={`View ${project.title}`}
               >
                 <Icon icon="external" size={20} />

@@ -5,12 +5,15 @@ import Icon from '../ui/Icon.astro';
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-dark-lighter border-t border-border">
+<footer class="bg-dark-lighter border-t border-border relative overflow-hidden">
+  <!-- Subtle animated gradient at top of footer -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+  
   <div class="container mx-auto px-4 md:px-6 lg:px-8 max-w-6xl py-12">
-    <div class="grid md:grid-cols-3 gap-8 mb-8">
+    <div class="grid md:grid-cols-3 gap-8 mb-8" data-animate="fade-up">
       <!-- Brand -->
       <div class="space-y-4">
-        <a href="#home" class="text-2xl font-bold gradient-text">
+        <a href="#home" class="text-2xl font-bold gradient-text-shift inline-block">
           {personalInfo.name}<span class="text-primary">.</span>
         </a>
         <p class="text-text-muted text-sm max-w-xs">
@@ -26,7 +29,7 @@ const currentYear = new Date().getFullYear();
             <li>
               <a 
                 href={link.href}
-                class="text-text-muted hover:text-primary transition-colors text-sm"
+                class="text-text-muted hover:text-primary hover:translate-x-1 transition-all duration-300 text-sm inline-block"
               >
                 {link.name}
               </a>
@@ -44,7 +47,7 @@ const currentYear = new Date().getFullYear();
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="p-2 rounded-lg bg-dark-card border border-border text-text-muted hover:text-primary hover:border-primary transition-all duration-300"
+              class="magnetic p-2 rounded-lg bg-dark-card border border-border text-text-muted hover:text-primary hover:border-primary hover:shadow-md hover:shadow-primary/10 transition-all duration-300"
               aria-label={link.name}
             >
               <Icon icon={link.icon as 'github' | 'linkedin' | 'email'} size={18} />

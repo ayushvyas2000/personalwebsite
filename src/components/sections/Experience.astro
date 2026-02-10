@@ -12,23 +12,23 @@ import { workExperience } from '../../data/portfolio';
     subtitle="My professional journey"
   />
 
-  <div class="relative">
-    <!-- Timeline line -->
-    <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent transform md:-translate-x-1/2"></div>
+  <div class="relative" data-animate="fade-up">
+    <!-- Timeline line (animated on scroll) -->
+    <div class="absolute left-0 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent transform md:-translate-x-1/2 timeline-line"></div>
 
     <!-- Experience items -->
     <div class="space-y-12">
       {workExperience.map((job, index) => (
         <div 
           class={`relative flex flex-col md:flex-row gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
-          data-animate
+          data-animate={index % 2 === 0 ? 'rotate-right' : 'rotate-left'}
         >
           <!-- Timeline dot -->
           <div class="absolute left-0 md:left-1/2 w-4 h-4 bg-primary rounded-full transform -translate-x-1/2 md:-translate-x-1/2 mt-2 glow animate-pulse-glow z-10"></div>
 
           <!-- Content -->
           <div class={`ml-8 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}`}>
-            <Card variant="gradient">
+            <Card variant="gradient" class="card-3d-hover relative overflow-hidden">
               <div class="space-y-4">
                 <!-- Header -->
                 <div class="flex items-start justify-between flex-wrap gap-2">

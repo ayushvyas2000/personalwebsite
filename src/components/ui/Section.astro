@@ -25,7 +25,7 @@ const backgrounds = {
   class={`py-24 md:py-32 scroll-mt-20 relative ${backgrounds[background]} ${className}`}
 >
   {divider && (
-    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
+    <div class="reveal-line" data-animate="fade-up"></div>
   )}
   <div class="container mx-auto px-4 md:px-6 lg:px-8 max-w-5xl">
     <slot />

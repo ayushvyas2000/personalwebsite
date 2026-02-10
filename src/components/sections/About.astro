@@ -14,8 +14,8 @@ import { summary, education } from '../../data/portfolio';
 
   <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
     <!-- About Text -->
-    <div data-animate>
-      <Card variant="glass" hover={false}>
+    <div data-animate="rotate-left">
+      <Card variant="glass" hover={false} class="card-3d-hover relative overflow-hidden">
         <div class="space-y-6">
           <p class="text-text-muted text-lg leading-relaxed">
             {summary.description}
@@ -35,9 +35,9 @@ import { summary, education } from '../../data/portfolio';
     </div>
 
     <!-- Highlights -->
-    <div class="grid grid-cols-2 gap-4" data-animate>
+    <div class="grid grid-cols-2 gap-4" data-animate="rotate-right">
       {summary.highlights.map((highlight, index) => (
-        <Card variant="gradient" class={`text-center stagger-${index + 1}`}>
+        <Card variant="gradient" class={`text-center stagger-${index + 1} card-3d-hover relative overflow-hidden`}>
           <div class="flex flex-col items-center gap-2">
             <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-2">
               <Icon 

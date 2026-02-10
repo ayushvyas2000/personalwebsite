@@ -14,8 +14,8 @@ import { personalInfo, socialLinks } from '../../data/portfolio';
   />
 
   <div class="max-w-3xl mx-auto">
-    <div data-animate>
-      <Card variant="glass" class="text-center">
+    <div data-animate="scale-3d">
+      <Card variant="glass" class="text-center card-3d-hover relative overflow-hidden">
         <div class="space-y-8">
           <!-- Message -->
           <p class="text-text-muted text-lg leading-relaxed max-w-xl mx-auto">
@@ -27,9 +27,9 @@ import { personalInfo, socialLinks } from '../../data/portfolio';
           <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
             <a 
               href={`mailto:${personalInfo.email}`}
-              class="flex items-center gap-3 text-text hover:text-primary transition-colors group"
+              class="flex items-center gap-3 text-text hover:text-primary transition-colors group magnetic"
             >
-              <div class="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+              <div class="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 group-hover:shadow-lg group-hover:shadow-primary/20 transition-all duration-300">
                 <Icon icon="email" size={20} class="text-primary" />
               </div>
               <span class="text-sm md:text-base">{personalInfo.email}</span>
@@ -37,9 +37,9 @@ import { personalInfo, socialLinks } from '../../data/portfolio';
             
             <a 
               href={`tel:${personalInfo.phone.replace(/\s/g, '')}`}
-              class="flex items-center gap-3 text-text hover:text-primary transition-colors group"
+              class="flex items-center gap-3 text-text hover:text-primary transition-colors group magnetic"
             >
-              <div class="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors">
+              <div class="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 group-hover:shadow-lg group-hover:shadow-primary/20 transition-all duration-300">
                 <Icon icon="phone" size={20} class="text-primary" />
               </div>
               <span class="text-sm md:text-base">{personalInfo.phone}</span>
@@ -67,7 +67,7 @@ import { personalInfo, socialLinks } from '../../data/portfolio';
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="p-4 rounded-xl bg-dark-card border border-border text-text-muted hover:text-primary hover:border-primary hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1"
+                  class="magnetic p-4 rounded-xl bg-dark-card border border-border text-text-muted hover:text-primary hover:border-primary hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2 hover:scale-110"
                   aria-label={link.name}
                 >
                   <Icon icon={link.icon as 'github' | 'linkedin' | 'email'} size={24} />

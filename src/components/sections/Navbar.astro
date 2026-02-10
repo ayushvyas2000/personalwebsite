@@ -2,13 +2,16 @@
 import { navLinks, personalInfo } from '../../data/portfolio';
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 glass">
+<header id="main-navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent">
+  <!-- Bottom border glow line -->
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/0 to-transparent transition-all duration-500" id="navbar-border"></div>
+
   <nav class="container mx-auto px-4 md:px-6 lg:px-8 max-w-6xl">
     <div class="flex items-center justify-between h-16 md:h-20">
       <!-- Logo -->
       <a 
         href="#home" 
-        class="text-xl md:text-2xl font-bold gradient-text hover:opacity-80 transition-opacity"
+        class="text-xl md:text-2xl font-bold gradient-text-shift hover:opacity-90 transition-opacity"
       >
         {personalInfo.name}<span class="text-primary">.</span>
       </a>
@@ -19,10 +22,10 @@ import { navLinks, personalInfo } from '../../data/portfolio';
           <li>
             <a 
               href={link.href}
-              class="text-text-muted hover:text-primary transition-colors duration-300 text-sm font-medium relative group"
+              class="text-text/70 hover:text-primary transition-all duration-300 text-sm font-medium relative group py-2"
             >
               {link.name}
-              <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-full rounded-full"></span>
             </a>
           </li>
         ))}
@@ -31,7 +34,7 @@ import { navLinks, personalInfo } from '../../data/portfolio';
       <!-- Mobile Menu Button -->
       <button 
         id="mobile-menu-btn"
-        class="md:hidden p-2 text-text-muted hover:text-primary transition-colors"
+        class="md:hidden p-2 text-text/70 hover:text-primary transition-colors duration-300"
         aria-label="Toggle menu"
       >
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,12 +45,12 @@ import { navLinks, personalInfo } from '../../data/portfolio';
 
     <!-- Mobile Navigation -->
     <div id="mobile-menu" class="hidden md:hidden pb-4">
-      <ul class="flex flex-col gap-4">
+      <ul class="flex flex-col gap-1">
         {navLinks.map((link) => (
           <li>
             <a 
               href={link.href}
-              class="block text-text-muted hover:text-primary transition-colors duration-300 text-base font-medium py-2"
+              class="block text-text/70 hover:text-primary hover:bg-primary/5 transition-all duration-300 text-base font-medium py-2.5 px-3 rounded-lg"
             >
               {link.name}
             </a>
@@ -59,6 +62,68 @@ import { navLinks, personalInfo } from '../../data/portfolio';
 </header>
 
 <script>
+  // ==========================================
+  // SMOOTH SCROLL WITH EASING
+  // ==========================================
+  function smoothScrollTo(targetY: number, duration = 1200) {
+    const startY = window.scrollY;
+    const diff = targetY - startY;
+    let startTime: number | null = null;
+
+    // ease-in-out cubic
+    function easeInOutCubic(t: number): number {
+      return t < 0.5
+        ? 4 * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function step(timestamp: number) {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeInOutCubic(progress);
+
+      window.scrollTo(0, startY + diff * easedProgress);
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  function handleAnchorClick(e: Event) {
+    const anchor = (e.target as HTMLElement).closest('a[href^="#"]');
+    if (!anchor) return;
+
+    const href = anchor.getAttribute('href');
+    if (!href || href === '#') return;
+
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    e.preventDefault();
+
+    const navbarHeight = document.querySelector('header')?.offsetHeight || 80;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
+
+    smoothScrollTo(targetTop, 1200);
+  }
+
+  // Attach to all nav anchor links (desktop + mobile + logo)
+  document.querySelectorAll('header a[href^="#"]').forEach(link => {
+    link.addEventListener('click', handleAnchorClick);
+  });
+
+  // Also handle the scroll indicator in hero if present
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', handleAnchorClick);
+  });
+
+  // ==========================================
+  // MOBILE MENU
+  // ==========================================
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   const menuIcon = document.getElementById('menu-icon');
